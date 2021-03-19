@@ -1,0 +1,98 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=1260px, initial-scale=1.0">
+    <title>UFC Fight Forum</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <!-- Top Navbar -->
+    <div class="fixed flex w-full h-12 bg-red-700 z-50">
+        <div class="container m-auto">
+            <a href="#top" class="bg-clip-text text-transparent bg-gradient-to-r from-gray-100 to-gray-200 text-2xl font-bold tracking-wide">Fight Fan Forum</a>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="-z-10">
+
+        <!-- Navbar button -->
+        <div class="fixed -inset-y-0 inset-x-auto flex items-center -z-10">
+            <div id="nav-btn" class="bg-red-700 p-4 pl-10 cursor-pointer">
+                <svg class="w-6 h-6 animate-pulse text-white" id="nav-btn-img" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+            </div>
+        </div>
+
+        <!-- Navbar main -->
+        <div class="fixed bg-red-700 shadow w-64 mt-12 min-h-screen transform -translate-x-96 duration-500" id="nav-toggle">
+            <ul class="list-reset">
+                <div class="flex p-4">
+                    <img class="inline-block h-12 w-12 rounded-full ring-2 ring-white" src="../img/avatar-img-1.png" alt="Image of your avatar">
+                    <span class="p-4 text-white border-red-600 border-r-2">Stefan</span>
+                    <span class="p-4 text-white">Rep: 12</span>
+                </div>
+                <li>
+                    <a href="#" class="block p-4 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white">Vault</a>
+                </li>
+                <li>
+                    <a href="#" class="block p-4 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white">Global Chatforum</a>                    
+                </li>
+                <li>
+                    <a href="#" class="block p-4 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white">UFC Fight Card</a>                    
+                </li>
+                <li>
+<!-- HIDE IT UNTIL LOGGED IN -->
+                    <a href="#" class="block p-4 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white">Settings</a>                    
+                </li>
+                <li>
+                    <a href="#" class="block p-4 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white">Sign In</a>                    
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="flex flex-col flex-wrap items-center justify-center h-auto">
+
+        <!-- Post Comment -->
+
+        <div class="flex flex-col flex-wrap bg-gray-50 font-bold rounded-lg border shadow-md p-10 w-2/4 mt-16">
+            <form action="">
+                <h1 class="text-2xl text-gray-700 pb-6">Post a comment</h1>
+                <textarea class="w-full h-24 px-3 py-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline focus:placeholder-gray-400" placeholder="Write your comment here"></textarea>
+                <input type="submit" value="Post" class="w-full mt-6 bg-red-700 hover:bg-red-600 duration-200 text-white font-semibold p-3 cursor-pointer">
+            </form>
+        </div>
+    
+        <!-- Event Card (JS OUTPUT) -->
+        <div class="flex flex-col flex-wrap w-2/4" id="output-events">
+
+            <!-- Fighters (JS OUTPUT) -->
+
+            </div> 
+        </div>   
+
+    </div>
+
+    <!-- Footer/Bottom of the page -->
+    <div class="container m-auto">
+        <div class="flex flex-col items-center my-12">
+            <a href="#top">
+                <svg class="w-12 h-12 cursor-pointer text-gray-600 hover:text-gray-500 duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" />
+                </svg>
+            </a>
+            <h1 class="text-gray-600 text-2xl py-2">You've reached bottom of the page</h1>
+            <h1 class="text-gray-600 py-2">Press the arrow to go back up</h1>
+        </div>
+    </div>
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="application/javascript" src="../js/nav.js"></script>
+<script type="application/javascript" src="../js/ufcAPI.js"></script>
+</body>
+</html>
