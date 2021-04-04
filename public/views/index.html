@@ -39,17 +39,20 @@
                     <a href="#" class="block p-4 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white">Vault</a>
                 </li>
                 <li>
-                    <a href="#" class="block p-4 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white">Global Chatforum</a>                    
+                    <a href="#" class="block p-4 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white" id="global-chat-btn">Global Chatforum</a>                    
                 </li>
                 <li>
                     <a href="#" class="block p-4 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white">UFC Fight Card</a>                    
                 </li>
                 <li>
 <!-- HIDE IT UNTIL LOGGED IN -->
-                    <a href="#" class="block p-4 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white">Settings</a>                    
+                    <a href="#" class="hidden block p-4 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white">Settings</a>                    
                 </li>
                 <li>
-                    <a href="#" class="block p-4 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white">Sign In</a>                    
+                    <a href="#" class="absolute p-4 inset-x-0 bottom-0 mb-28 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white" id="register-btn">Register</a>                    
+                </li>
+                <li>
+                    <a href="#" class="absolute p-4 inset-x-0 bottom-0 mb-14 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white" id="sign-in-btn">Sign In</a>                    
                 </li>
             </ul>
         </div>
@@ -64,19 +67,101 @@
             <form action="">
                 <h1 class="text-2xl text-gray-700 pb-6">Post a comment</h1>
                 <textarea class="w-full h-24 px-3 py-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline focus:placeholder-gray-400" placeholder="Write your comment here"></textarea>
-                <input type="submit" value="Post" class="w-full mt-6 bg-red-700 hover:bg-red-600 duration-200 text-white font-semibold p-3 cursor-pointer">
+                <input type="submit" value="Post" class="w-full mt-6 bg-red-700 hover:bg-red-600 duration-200 text-white font-semibold p-3 cursor-pointer rounded-md">
             </form>
         </div>
-    
+   
         <!-- Event Card (JS OUTPUT) -->
         <div class="flex flex-col flex-wrap w-2/4" id="output-events">
 
-            <!-- Fighters (JS OUTPUT) -->
+        <!-- Fighters (JS OUTPUT) -->
 
-            </div> 
-        </div>   
+        </div> 
+    </div>   
 
+
+    <!-- Global Chat Forum -->
+    <div class="fixed inset-y-0 right-0 bg-gray-100 flex flex-col flex-wrap min-h-screen w-80 mt-12 hidden" id="chat-forum">
+        <div class="font-bold rounded-lg border shadow-md p-8 min-h-screen relative">
+            <div class="font-bold text-2xl text-gray-700">Global Chat Room</div>
+            <span class="block w-full h-0.5 mt-2 bg-gray-200 rounded-md"></span>
+            <!-- comments -->
+            <div class="flex flex-col">
+                <div class="flex flex-row border-gray-200 border-b-2 pb-3" id="chat-usr-post">
+                    <!-- chatter username -->
+                    <div class="mt-6 h-2/3 self-center w-1/3 " id="chatter-username">
+                        <div class="font-bold text-sm " >Stefan: </div>
+                    </div>
+                    <!-- chatter comment -->
+                    <div class="mt-6 h-2/3 w-2/3"id="chat-comments">
+                        <div class=" font-normal text-sm ">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad eligendi, quia in, ab laborum nisi illo </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="absolute inset-x-0 bottom-0 mb-16 w-10/12 m-auto">
+                <textarea class="w-full h-24 px-3 py-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline focus:placeholder-gray-400" placeholder="Write your comment here"></textarea>
+                <input type="submit" value="Post Comment" class="w-full mt-6 bg-red-700 hover:bg-red-600 duration-200 text-white font-semibold p-3 cursor-pointer rounded-md">
+            </div>
+        </div>
     </div>
+
+    <!-- login form -->
+    <div class="flex flex-col flex-wrap items-center justify-center absolute inset-y-0 inset-x-1/3 hidden" id="login-form">
+        <div class="bg-gray-50 font-bold rounded-lg border shadow-md p-10 w-full my-16 relative">
+            <!-- "x button" -->
+            <div class="hover:bg-gray-400 cursor-pointer" id="close-login-btn">
+                <span class="block w-5 h-1 rounded-md bg-gray-600 transform rotate-45 mx-10 my-8 absolute top-0 right-0"></span>
+                <span class="block w-5 h-1 rounded-md bg-gray-600 transform -rotate-45 mx-10 my-8 absolute top-0 right-0"></span>    
+            </div>
+
+            <!-- input fields username/password and login btn -->
+            <div class="mb-4">
+                <label class="btext-sm font-bold text-gray-700 tracking-wide" for="username">Username</label>
+                <input class="bg-gray-50 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-red-500" id="username" type="text" placeholder="Jane Doe">
+                <div class="mt-8">
+                    <label class="btext-sm font-bold text-gray-700 tracking-wide" for="password">Password</label>
+                    <input class="bg-gray-50 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-red-500" id="password" type="text" placeholder="qwerty*">    
+                </div>
+                <div class="mt-8">
+                    <input type="submit" value="Login" class="w-full mt-6 bg-red-700 hover:bg-red-600 duration-200 text-white font-semibold p-3 cursor-pointer rounded-md">
+                </div>
+            </div>
+        </div>    
+    </div>
+
+    <!-- register form -->
+    <div class="flex flex-col flex-wrap items-center justify-center absolute inset-y-0 inset-x-1/3 hidden" id="register-form">
+        <div class="bg-gray-50 font-bold rounded-lg border shadow-md p-10 w-full my-16 relative">
+            <!-- "x button" -->
+            <div class="hover:bg-gray-400 cursor-pointer" id="close-register-btn">
+                <span class="block w-5 h-1 rounded-md bg-gray-600 transform rotate-45 mx-10 my-8 absolute top-0 right-0"></span>
+                <span class="block w-5 h-1 rounded-md bg-gray-600 transform -rotate-45 mx-10 my-8 absolute top-0 right-0"></span>    
+            </div>
+
+            <!-- input fields username/password/confirm password/email and login btn -->
+            <div class="mb-4">
+                <label class="btext-sm font-bold text-gray-700 tracking-wide" for="username">Username</label>
+                <input class="bg-gray-50 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-red-500" id="username" type="text" placeholder="Jane Doe">
+                <div class="mt-8">
+                    <label class="btext-sm font-bold text-gray-700 tracking-wide" for="password">Password</label>
+                    <input class="bg-gray-50 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-red-500" id="password" type="text" placeholder="qwerty*">    
+                </div>
+                <div class="mt-8">
+                    <label class="btext-sm font-bold text-gray-700 tracking-wide" for="confirmPassword">Confirm Password</label>
+                    <input class="bg-gray-50 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-red-500" id="confirmPassword" type="text" placeholder="qwerty*">    
+                </div>
+                <div class="mt-8">
+                    <label class="btext-sm font-bold text-gray-700 tracking-wide" for="email">Email</label>
+                    <input class="bg-gray-50 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-red-500" id="email" type="email" placeholder="Janedoe@gmail.com">    
+                </div>
+                <div class="mt-8">
+                    <input type="submit" value="Register" class="w-full mt-6 bg-red-700 hover:bg-red-600 duration-200 text-white font-semibold p-3 cursor-pointer rounded-md">
+                </div>
+            </div>
+        </div>    
+    </div>
+
 
     <!-- Footer/Bottom of the page -->
     <div class="container m-auto">
@@ -93,6 +178,8 @@
     
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="application/javascript" src="../js/nav.js"></script>
+<script type="application/javascript" src="../js/login.js"></script>
+<script type="application/javascript" src="../js/chat.js"></script>
 <script type="application/javascript" src="../js/ufcAPI.js"></script>
 </body>
 </html>
