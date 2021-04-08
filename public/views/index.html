@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=1260px, initial-scale=1.0">
     <title>UFC Fight Forum</title>
     <link rel="stylesheet" href="../css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script type="application/javascript" src="../js/ufcAPI.js"></script>
 </head>
 <body>
 
@@ -17,23 +20,13 @@
 
     <!-- Navbar -->
     <nav class="-z-10">
-
-        <!-- Navbar button -->
-        <div class="fixed -inset-y-0 inset-x-auto flex items-center -z-10">
-            <div id="nav-btn" class="bg-red-700 p-4 pl-10 cursor-pointer">
-                <svg class="w-6 h-6 animate-pulse text-white" id="nav-btn-img" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-            </div>
-        </div>
-
         <!-- Navbar main -->
-        <div class="fixed bg-red-700 shadow w-64 mt-12 min-h-screen transform -translate-x-96 duration-500" id="nav-toggle">
+        <div class="fixed bg-red-700 shadow w-64 mt-12 min-h-screen duration-500" id="nav-toggle">
             <ul class="list-reset">
                 <div class="flex p-4">
-                    <img class="inline-block h-12 w-12 rounded-full ring-2 ring-white" src="../img/avatar-img-1.png" alt="Image of your avatar">
-                    <span class="p-4 text-white border-red-600 border-r-2">Stefan</span>
-                    <span class="p-4 text-white">Rep: 12</span>
+                    <img id='nav-avatar' class="inline-block h-12 w-12 rounded-full ring-2 ring-white hidden" src="../img/avatar-img-1.png" alt="Image of your avatar">
+                    <span id='nav-username' class="p-4 text-white border-red-600 border-r-2 hidden"></span>
+                    <span id='nav-rep' class="p-4 text-white hidden">Rep: </span>
                 </div>
                 <li>
                     <a href="#" class="block p-4 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white">Vault</a>
@@ -42,17 +35,16 @@
                     <a href="#" class="block p-4 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white" id="global-chat-btn">Global Chatforum</a>                    
                 </li>
                 <li>
-                    <a href="#" class="block p-4 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white">UFC Fight Card</a>                    
+                    <a href="#" class="block p-4 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white hidden" id="settings-nav-btn">Settings</a>                    
                 </li>
                 <li>
-<!-- HIDE IT UNTIL LOGGED IN -->
-                    <a href="#" class="hidden block p-4 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white">Settings</a>                    
-                </li>
-                <li>
-                    <a href="#" class="absolute p-4 inset-x-0 bottom-0 mb-28 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white" id="register-btn">Register</a>                    
+                    <a href="#" class="absolute p-4 inset-x-0 bottom-0 mb-28 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white" id="register-nav-btn">Register</a>                    
                 </li>
                 <li>
                     <a href="#" class="absolute p-4 inset-x-0 bottom-0 mb-14 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white" id="sign-in-btn">Sign In</a>                    
+                </li>
+                <li>
+                    <a href="#" class="absolute p-4 inset-x-0 bottom-0 mb-14 hover:bg-red-600 hover:border-red-400 border-red-600 border-r-8 transition duration-200 text-white hidden" id="sign-out-btn">Log out</a>                    
                 </li>
             </ul>
         </div>
@@ -60,20 +52,10 @@
 
     <!-- Main Content -->
     <div class="flex flex-col flex-wrap items-center justify-center h-auto">
-
-        <!-- Post Comment -->
-
-        <div class="flex flex-col flex-wrap bg-gray-50 font-bold rounded-lg border shadow-md p-10 w-2/4 mt-16">
-            <form action="">
-                <h1 class="text-2xl text-gray-700 pb-6">Post a comment</h1>
-                <textarea class="w-full h-24 px-3 py-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline focus:placeholder-gray-400" placeholder="Write your comment here"></textarea>
-                <input type="submit" value="Post" class="w-full mt-6 bg-red-700 hover:bg-red-600 duration-200 text-white font-semibold p-3 cursor-pointer rounded-md">
-            </form>
-        </div>
    
         <!-- Event Card (JS OUTPUT) -->
         <div class="flex flex-col flex-wrap w-2/4" id="output-events">
-
+            
         <!-- Fighters (JS OUTPUT) -->
 
         </div> 
@@ -81,27 +63,18 @@
 
 
     <!-- Global Chat Forum -->
-    <div class="fixed inset-y-0 right-0 bg-gray-100 flex flex-col flex-wrap min-h-screen w-80 mt-12 hidden" id="chat-forum">
+    <div class="fixed inset-y-0 right-0 bg-gray-100 flex flex-col flex-wrap min-h-screen w-80 mt-12" id="chat-forum">
         <div class="font-bold rounded-lg border shadow-md p-8 min-h-screen relative">
+            <div id="clear-chat-btn" class="font-mono text-xs underline text-green-700 cursor-pointer mb-2">Clear Chat</div>
             <div class="font-bold text-2xl text-gray-700">Global Chat Room</div>
             <span class="block w-full h-0.5 mt-2 bg-gray-200 rounded-md"></span>
             <!-- comments -->
-            <div class="flex flex-col">
-                <div class="flex flex-row border-gray-200 border-b-2 pb-3" id="chat-usr-post">
-                    <!-- chatter username -->
-                    <div class="mt-6 h-2/3 self-center w-1/3 " id="chatter-username">
-                        <div class="font-bold text-sm " >Stefan: </div>
-                    </div>
-                    <!-- chatter comment -->
-                    <div class="mt-6 h-2/3 w-2/3"id="chat-comments">
-                        <div class=" font-normal text-sm ">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad eligendi, quia in, ab laborum nisi illo </div>
-                    </div>
-                </div>
+            <div class="flex flex-col overflow-y-scroll overflow-x-hidden max-h-36-rem" id="chat-usr-post">
+
             </div>
-            
             <div class="absolute inset-x-0 bottom-0 mb-16 w-10/12 m-auto">
-                <textarea class="w-full h-24 px-3 py-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline focus:placeholder-gray-400" placeholder="Write your comment here"></textarea>
-                <input type="submit" value="Post Comment" class="w-full mt-6 bg-red-700 hover:bg-red-600 duration-200 text-white font-semibold p-3 cursor-pointer rounded-md">
+                <textarea id="chat-textArea" class="w-full h-24 px-3 py-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline focus:placeholder-gray-400" placeholder="Write your comment here"></textarea>
+                <input id="chat-submit-btn" type="submit" value="Post Comment" class="w-full mt-6 bg-red-700 hover:bg-red-600 duration-200 text-white font-semibold p-3 cursor-pointer rounded-md">
             </div>
         </div>
     </div>
@@ -115,23 +88,35 @@
                 <span class="block w-5 h-1 rounded-md bg-gray-600 transform -rotate-45 mx-10 my-8 absolute top-0 right-0"></span>    
             </div>
 
+            <div class="w-full h-16 pt-4 my-6 bg-green-500 rounded-md border-green-300 border-dashed border-2 hidden" id="login-successfull-banner">
+                <h1 id="login-succ-text"></h1>
+            </div>
+
+            <div class="w-full h-16 pt-4 my-6 bg-gray-700 rounded-md border-gray-300 border-dashed border-2 hidden" id="user-logged-in-banner">
+                <h1 class="text-gray-50 text-center text-lg font-semibold">User already logged in</h1>
+            </div>
+
+            <div class="w-full h-16 pt-4 my-6 bg-red-500 rounded-md border-red-300 border-dashed border-2 hidden" id="login-unsuccessfull-banner">
+                <h1 class='text-gray-50 text-center text-lg font-semibold'>Incorrect Username or Password</h1>
+            </div>
+
             <!-- input fields username/password and login btn -->
             <div class="mb-4">
                 <label class="btext-sm font-bold text-gray-700 tracking-wide" for="username">Username</label>
-                <input class="bg-gray-50 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-red-500" id="username" type="text" placeholder="Jane Doe">
+                <input id="login-username-input" class="bg-gray-50 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-red-500" id="username" type="text" placeholder="Jane Doe">
                 <div class="mt-8">
                     <label class="btext-sm font-bold text-gray-700 tracking-wide" for="password">Password</label>
-                    <input class="bg-gray-50 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-red-500" id="password" type="text" placeholder="qwerty*">    
+                    <input id="login-password-input" class="bg-gray-50 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-red-500" id="password" type="text" placeholder="qwerty*">    
                 </div>
                 <div class="mt-8">
-                    <input type="submit" value="Login" class="w-full mt-6 bg-red-700 hover:bg-red-600 duration-200 text-white font-semibold p-3 cursor-pointer rounded-md">
+                    <input id="login-submit-btn" type="submit" value="Login" class="w-full mt-6 bg-red-700 hover:bg-red-600 duration-200 text-white font-semibold p-3 cursor-pointer rounded-md">
                 </div>
             </div>
         </div>    
     </div>
 
-    <!-- register form -->
-    <div class="flex flex-col flex-wrap items-center justify-center absolute inset-y-0 inset-x-1/3 hidden" id="register-form">
+    <!-- register form  -->
+    <div class="flex flex-col flex-wrap items-center justify-center absolute inset-y-0 inset-x-1/3 hidden" id="register-form-popup">
         <div class="bg-gray-50 font-bold rounded-lg border shadow-md p-10 w-full my-16 relative">
             <!-- "x button" -->
             <div class="hover:bg-gray-400 cursor-pointer" id="close-register-btn">
@@ -139,26 +124,61 @@
                 <span class="block w-5 h-1 rounded-md bg-gray-600 transform -rotate-45 mx-10 my-8 absolute top-0 right-0"></span>    
             </div>
 
-            <!-- input fields username/password/confirm password/email and login btn -->
-            <div class="mb-4">
-                <label class="btext-sm font-bold text-gray-700 tracking-wide" for="username">Username</label>
-                <input class="bg-gray-50 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-red-500" id="username" type="text" placeholder="Jane Doe">
-                <div class="mt-8">
-                    <label class="btext-sm font-bold text-gray-700 tracking-wide" for="password">Password</label>
-                    <input class="bg-gray-50 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-red-500" id="password" type="text" placeholder="qwerty*">    
-                </div>
-                <div class="mt-8">
-                    <label class="btext-sm font-bold text-gray-700 tracking-wide" for="confirmPassword">Confirm Password</label>
-                    <input class="bg-gray-50 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-red-500" id="confirmPassword" type="text" placeholder="qwerty*">    
-                </div>
-                <div class="mt-8">
-                    <label class="btext-sm font-bold text-gray-700 tracking-wide" for="email">Email</label>
-                    <input class="bg-gray-50 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-red-500" id="email" type="email" placeholder="Janedoe@gmail.com">    
-                </div>
-                <div class="mt-8">
-                    <input type="submit" value="Register" class="w-full mt-6 bg-red-700 hover:bg-red-600 duration-200 text-white font-semibold p-3 cursor-pointer rounded-md">
-                </div>
+            <div class="w-full h-16 pt-4 my-6 bg-green-500 rounded-md border-green-300 border-dashed border-2 hidden" id="registration-successfull-banner">
+                <h1 class="text-gray-50 text-center text-lg font-semibold">Registration completed successfully</h1>
             </div>
+
+            <!-- input fields username/password/confirm password/email and login btn -->
+            <form id="register-form" method="post" action="">
+                <div class="mb-4">
+                    <label class="btext-sm font-bold text-gray-700 tracking-wide" for="register-username-input">Username</label>
+                    <input class="bg-gray-50 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-red-500" name="username" id="register-username-input" type="text" minlength="3" required placeholder="Jane Doe">
+                    <div class="mt-8">
+                        <label class="btext-sm font-bold text-gray-700 tracking-wide" for="register-password-input" >Password</label>
+                        <input class="bg-gray-50 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-red-500" id="register-password-input" type="text" placeholder="qwerty*">    
+                    </div>
+                    <div class="mt-8">
+                        <label class="btext-sm font-bold text-gray-700 tracking-wide" for="register-confirmPassword-input" >Confirm Password</label>
+                        <input class="bg-gray-50 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-red-500" id="register-confirmPassword-input" type="text" placeholder="qwerty*">    
+                    </div>
+                    <div class="mt-8">
+                        <label class="btext-sm font-bold text-gray-700 tracking-wide">Email</label>
+                        <input class="bg-gray-50 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-red-500" id="register-email-input" type="email" placeholder="Janedoe@gmail.com">    
+                    </div>
+                    <div class="mt-8">
+                        <input id="register-submit-btn" type="submit" value="Register" class="w-full mt-6 bg-red-700 hover:bg-red-600 duration-200 text-white font-semibold p-3 cursor-pointer rounded-md">
+                    </div>
+                </div>
+            </form>
+        </div>    
+    </div>
+
+    <!-- settings form  -->
+    <div class="flex flex-col flex-wrap items-center justify-center absolute inset-y-0 inset-x-1/3 hidden" id="settings-form-popup">
+        <div class="bg-gray-50 font-bold rounded-lg border shadow-md p-10 w-full my-16 relative">
+            <!-- "x button" -->
+            <div class="hover:bg-gray-400 cursor-pointer" id="close-settings-btn">
+                <span class="block w-5 h-1 rounded-md bg-gray-600 transform rotate-45 mx-10 my-8 absolute top-0 right-0"></span>
+                <span class="block w-5 h-1 rounded-md bg-gray-600 transform -rotate-45 mx-10 my-8 absolute top-0 right-0"></span>    
+            </div>
+
+            <!-- settings -->
+            <form id="settings-form" method="post" action="">
+                <div class="mb-4">
+                    <h1 class=" text-lg text-gray-800">Change Password</h1>
+                    <div class="mt-4">
+                        <label class="btext-sm font-bold text-gray-700 tracking-wide">Old Password</label>
+                        <input class="bg-gray-50 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-red-500" id="settings-old-password" type="text" placeholder="qwerty*">
+                    </div>
+                    <div class="mt-4">
+                        <label class="btext-sm font-bold text-gray-700 tracking-wide">New Password</label>
+                        <input class="bg-gray-50 w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-red-500" id="settings-new-password" type="text" placeholder="abcd*">    
+                    </div>
+                    <div class="mt-8">
+                        <input id="settings-submit-btn" type="submit" value="Update Settings" class="w-full mt-6 bg-red-700 hover:bg-red-600 duration-200 text-white font-semibold p-3 cursor-pointer rounded-md">
+                    </div>
+                </div>
+            </form>
         </div>    
     </div>
 
@@ -176,10 +196,10 @@
         </div>
     </div>
     
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="application/javascript" src="../js/nav.js"></script>
+<script type="application/javascript" src="../js/form.js"></script>
+<script type="application/javascript" src="../js/register.js"></script>
 <script type="application/javascript" src="../js/login.js"></script>
 <script type="application/javascript" src="../js/chat.js"></script>
-<script type="application/javascript" src="../js/ufcAPI.js"></script>
+<script type="application/javascript" src="../js/main.js"></script>
 </body>
 </html>
